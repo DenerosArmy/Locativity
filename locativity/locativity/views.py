@@ -31,6 +31,9 @@ def whereIam(location):
       return building
   return None
 
+def presentation(request):
+  return render_to_response("cartime.html")
+
 
 def presentation_data(request):
   """Returns a JSON containing all the data for the final presentation. JSON should be an array of paths, each containing the building the path starts at. Eg:

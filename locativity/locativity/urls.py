@@ -7,7 +7,7 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     # Web Services
     url(r'^$', 'locativity.views.home', name='home'),
-    url(r'^dashboard', 'locativity.views.dashboard', name='dashboard'),
+    url(r'^presentation', 'locativity.views.presentation', name='presentation'),
 
     # Endpoint Services
     # url(r'^$', 'locativity.views.home', name='home'),
