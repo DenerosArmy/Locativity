@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     # Web Services
     url(r'^$', 'locativity.views.home', name='home'),
     url(r'^presentation', 'locativity.views.presentation', name='presentation'),
+    url(r'^v3_epoly.js', 'locativity.views.v3_epoly', name='v3_epoly'),
 
     # Endpoint Services
     # url(r'^$', 'locativity.views.home', name='home'),

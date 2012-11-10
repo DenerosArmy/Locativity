@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-import locaobjects
+from locaobjects import *
 import json
 
 HOME = building((2,3), (8,10), [], "Home")
@@ -31,6 +31,9 @@ def whereIam(location):
     if building.contains(location):
       return building
   return None
+
+def v3_epoly(request):
+  return render_to_response("v3_epoly.js")
 
 def presentation(request):
   return render_to_response("cartime.html")
