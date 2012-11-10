@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html> 
+<head> 
+   <title>Google Maps Geocoding Demo</title> 
+   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+   <style type="text/css">
+     html { height: 100% }
+     body { height: 100%; margin: 0px; padding: 0px }
+     #map { height: 100% }
+   </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAiD-ujSRdIMkqRISKerIHjj3FEcMW6RFA&sensor=false"></script>
+
+       <script>
+      var line;
+      var polylines = new Array();
+
+      function initialize() {
+        var address = 'Sather Tower, UC Berkeley, Berkeley, CA';
+
+        var mapOptions = {
+          center: new google.maps.LatLng(37.872071,-122.257834),
+          zoom: 16,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById('map'),
+            mapOptions);
+
+        var lineCoordinates = [
+          new google.maps.LatLng(37.875209,-122.25646),
+          new google.maps.LatLng(37.875277,-122.259614),
+          new google.maps.LatLng(37.874181,-122.263528)
+        ];
+        var lineSymbol = {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 8,
+          strokeColor: '#33b5e5',
+          strokeWeight: 12
+        };
+        function addMarker(location) {
+          marker = new google.maps.Marker({
+          position: location,
+          map: map
+        });
+        markersArray.push(marker);
+        }
+        line = new google.maps.Polyline({
+          path: lineCoordinates,
+          icons: [{
+            icon: lineSymbol,
+            offset: '100%'
+          }],
+          map: map
+        });
+      }
+
+      function animateCircle() {
+          var count = 0;
+          var eventsFired = 0;
+          offsetId = window.setInterval(function() {
+            count = (count + 1) % 200;
+            var icons = line.get('icons');
+            icons[0].offset = (count / 2) + '%';
+            line.set('icons', icons);
+            eventsFired ++;
+        },30);
+
+
+
+
+      }
+    </script>
+</head> 
+<body onload="initialize();"> 
+  <script>animateCircle(); </script>
+   <div id="map"></div> 
+</body> 
+
+</html>
