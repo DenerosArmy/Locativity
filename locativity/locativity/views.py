@@ -13,7 +13,9 @@ def presentation_data(request):
      'start':{
        'building_name':<building_name>,
        'coordinates':<coordinates>,
+       'start_time':
        'total_time_spent':<duration>,
+       'end_time':
        'comp_activity':{
          'facebook':20 <mins>,
          '9gag': 10000 <mins>,
