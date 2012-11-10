@@ -1,0 +1,12 @@
+[submodule "external/egodatabase"]
+	path = external/egodatabase
+	url = git://github.com/gradha/egodatabase.git
+[submodule "external/ELHASO-iOS-snippets"]
+	path = external/ELHASO-iOS-snippets
+	url = git://github.com/gradha/ELHASO-iOS-snippets.git
+[submodule "external/DCIntrospect"]
+	path = external/DCIntrospect
+	url = git://github.com/gradha/DCIntrospect.git
+[submodule "external/EHReachability"]
+	path = external/EHReachability
+	url = git://github.com/gradha/EHReachability.git
