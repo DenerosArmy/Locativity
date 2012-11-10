@@ -60,55 +60,41 @@ function createMarker(latlng, label, html) {
 }
 
 function createModal(label,data) { 
-	str = '<div id="'+label+'" class="modal hide fade" tabindex="-1" style="width: 850px; margin-left:-425px; height: 500px" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Foothill - Avg. Productivity 1.43 - Total Time: 3 hrs </h3>
-  </div>
-  <div class="modal-body">
-  
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-      	//string json_stirng = @"{social: 20, Development: 40, Work: 30, Other: 10}"
-      	var arr_from_json = JSON.parse(json_string);
-        var data = google.visualization.arrayToDataTable([
-        var dict = ['+'Category'+', '+'Percent Time'+'];
-          for(var i=0; i<arr.length; i++) {
-	          	var cat = arr['+'Category'+'];
-	          	var len = arr['+'Percent_Time'+'];
-	          	      	
-
-	          	dict.push({
-    key:   cat,
-    value: len
-    		});
-
-	          			}
-	          			//script to open/close $('+'#myModal'+').modal('+'show'+');
-    
-]);
-
-
-  new google.visualization.PieChart(document.getElementById('+'chart_div_cat'+')).
-      draw(data, {title:"Categories",   width: 650,
-  height: 400,is3D:true
-});
-      }
-      
-    </script>
-
-    	<div span="span8"  >
-    <div id="chart_div_cat" style="width: 400px; height: 600px;"></div>
-  </div>
-  </div>
-</div>
-'
-	document.getElementById("modals").appendChild(str);
-
-	
+	str = '<div id="'+label+'" class="modal hide fade" tabindex="-1" style="width: 850px; margin-left:-425px; height: 500px" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">'+
+  '<div class="modal-header">'+
+  '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>'+
+  '<h3 id="myModalLabel">Foothill - Avg. Productivity 1.43 - Total Time: 3 hrs </h3>'+
+  '</div>'+
+  '<div class="modal-body">'+
+  '<script type="text/javascript" src="https://www.google.com/jsapi"><\/script>'+
+  '<script type="text/javascript">'+
+  'google.load("visualization", "1", {packages:["corechart"]});'+
+  'google.setOnLoadCallback(drawChart);'+
+  'function drawChart() {'+
+  '//string json_stirng = @"{social: 20, Development: 40, Work: 30, Other: 10}"'+
+  'var arr_from_json = JSON.parse(json_string);'+
+  'var data = google.visualization.arrayToDataTable(['+
+  'var dict = ['+'Category'+', '+'Percent Time'+'];'+
+  'for(var i=0; i<arr.length; i++) {'+
+  'var cat = arr['+'Category'+'];'+
+  'var len = arr['+'Percent_Time'+'];'+
+  'dict.push({'+
+  'key:   cat,'+
+  'value: len'+
+  '});'+
+  '}'+
+   //script to open/close $('+'#myModal'+').modal('+'show'+');
+  ']);'+
+   'new google.visualization.PieChart(document.getElementById('+'chart_div_cat'+')).'+
+   'draw(data, {title:"Categories", width: 650, height: 400,is3D:true});'+
+   '}'+
+   '<\/script>'+
+   '<div span="span8"  >'+
+   '<div id="chart_div_cat" style="width: 400px; height: 600px;"></div>'+
+   '</div>'+
+   '</div>'+
+   '</div>';
+   document.getElementById("modals").appendChild(str);
 }
 
 function initialize() {
@@ -135,7 +121,7 @@ function initialize() {
     
     // Create a map and center it.
     var myOptions = {
-      zoom: 18,
+      zoom: 16,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       styles: stylesArray
     }
@@ -158,11 +144,6 @@ function initialize() {
     strokeColor: '#3ED8F0',
     strokeWeight: 3
     });
-    poly2 = new google.maps.Polyline({
-    path: [],
-    strokeColor: '#3ED8F0',
-    strokeWeight: 3
-    });
 }
   
 var steps = []
@@ -172,14 +153,8 @@ function drawRoute(start, end, waypoints){
     if (timerHandle) { clearTimeout(timerHandle); }
     if (marker) { marker.setMap(null);}
     polyline.setMap(null);
-    poly2.setMap(null);
     directionsDisplay.setMap(null);
     polyline = new google.maps.Polyline({
-        path: [],
-        strokeColor: '#3ED8F0',
-        strokeWeight: 3
-    });
-    poly2 = new google.maps.Polyline({
         path: [],
         strokeColor: '#3ED8F0',
         strokeWeight: 3
@@ -224,8 +199,7 @@ function drawRoute(start, end, waypoints){
                 startLocation.latlng = legs[i].start_location;
                 startLocation.address = legs[i].start_address;
                 // marker = google.maps.Marker({map:map,position: startLocation.latlng});
-                marker = createMarker(legs[i].start_location,"start",legs[i].start_address+"<img src='http://maps.googleapis.com/maps/api/streetview?size=100x100&location="+legs[i].start_location+"'>","blue");
-                //make sure that this works
+                marker = createMarker(legs[i].start_location,legs[i].start_address,legs[i].start_address+"<img src='http://maps.googleapis.com/maps/api/streetview?size=100x100&location="+legs[i].start_location+"'>","blue");
               }
               endLocation.latlng = legs[i].end_location;
               endLocation.address = legs[i].end_address;
@@ -235,9 +209,6 @@ function drawRoute(start, end, waypoints){
                 for (k=0;k<nextSegment.length;k++) {
                   polyline.getPath().push(nextSegment[k]);
                   bounds.extend(nextSegment[k]);
-
-
-
                 }
               }
             }
@@ -246,8 +217,14 @@ function drawRoute(start, end, waypoints){
             //createMarker(endLocation.latlng,"end",endLocation.address,"red");
             map.setZoom(18);
             startAnimation();
-        }                                                    
+        }
     });
+}
+
+function sleep(ms){
+  var dt = new Date();
+  dt.setTime(dt.getTime() + ms);
+  while (new Date().getTime() < dt.getTime());
 }
 
 function startPresentation(){
@@ -259,15 +236,28 @@ function startPresentation(){
         var data = wrapped["data"];
         var start;
         var end;
-        for (var i=0;i<data.length-1;i++){
-          console.log(data[i+1])
+        var i=0;
+        for (var i=0; i<data.length-1; i++){
           start = data[i]["start"]["coordinates"];
-          waypoints = data[i]["path"]["locations"];
+          //waypoints = data[i]["path"]["locations"];
           end = data[i+1]["start"]["coordinates"];
-
-          drawRoute(start, end, waypoints);
+          drawRoute(start, end, []);
+          sleep(1);
+          //createModal(data[i+1]["start"]["building_name"], data[i+1]["comp_activity"])
         }
-        drawRoute(data[data.length-1]["start"][coordinates],data[data.length-1]["start"][coordinates],[]);
+        /*
+        setInterval(function(){
+          if (i<data.length-1){
+            start = data[i]["start"]["coordinates"];
+            //waypoints = data[i]["path"]["locations"];
+            end = data[i+1]["start"]["coordinates"];
+            drawRoute(start, end, []);
+            //createModal(data[i+1]["start"]["building_name"], data[i+1]["comp_activity"])
+            i++;
+          }
+        },8000/i);
+        */
+        //drawRoute(data[data.length-1]["start"]["coordinates"],data[data.length-1]["start"]["coordinates"],[]);
       }
   });
 }
@@ -282,49 +272,49 @@ var lastVertex = 1;
 
 
 //=============== animation functions ======================
-      function updatePoly(d) {
-        // Spawn a new polyline every 20 vertices, because updating a 100-vertex poly is too slow
-        if (poly2.getPath().getLength() > 20) {
-          poly2=new google.maps.Polyline([polyline.getPath().getAt(lastVertex-1)]);
-          // map.addOverlay(poly2)
-        }
+function updatePoly(d) {
+    // Spawn a new polyline every 20 vertices, because updating a 100-vertex poly is too slow
+    if (poly2.getPath().getLength() > 20) {
+      poly2=new google.maps.Polyline([polyline.getPath().getAt(lastVertex-1)]);
+      // map.addOverlay(poly2)
+    }
 
-        if (polyline.GetIndexAtDistance(d) < lastVertex+2) {
-           if (poly2.getPath().getLength()>1) {
-             poly2.getPath().removeAt(poly2.getPath().getLength()-1)
-           }
-           poly2.getPath().insertAt(poly2.getPath().getLength(),polyline.GetPointAtDistance(d));
-        } else {
-          poly2.getPath().insertAt(poly2.getPath().getLength(),endLocation.latlng);
-        }
-      }
+    if (polyline.GetIndexAtDistance(d) < lastVertex+2) {
+       if (poly2.getPath().getLength()>1) {
+         poly2.getPath().removeAt(poly2.getPath().getLength()-1)
+       }
+       poly2.getPath().insertAt(poly2.getPath().getLength(),polyline.GetPointAtDistance(d));
+    } else {
+      poly2.getPath().insertAt(poly2.getPath().getLength(),endLocation.latlng);
+    }
+}
 
 
-      function animate(d) {
-// alert("animate("+d+")");
-        if (d>eol) {
-          map.panTo(endLocation.latlng);
-          marker.setPosition(endLocation.latlng);
-          return;
-        }
-        var p = polyline.GetPointAtDistance(d);
-        map.panTo(p);
-        marker.setPosition(p);
-        updatePoly(d);
-        timerHandle = setTimeout("animate("+(d+step)+")", tick);
-      }
+function animate(d) {
+    // alert("animate("+d+")");
+    if (d>eol) {
+      map.panTo(endLocation.latlng);
+      marker.setPosition(endLocation.latlng);
+      return;
+    }
+    var p = polyline.GetPointAtDistance(d);
+    map.panTo(p);
+    marker.setPosition(p);
+    updatePoly(d);
+    timerHandle = setTimeout("animate("+(d+step)+")", tick);
+}
 
 
 function startAnimation() {
-        eol=polyline.Distance();
-        map.setCenter(polyline.getPath().getAt(0));
-        // map.addOverlay(new google.maps.Marker(polyline.getAt(0),G_START_ICON));
-        // map.addOverlay(new GMarker(polyline.getVertex(polyline.getVertexCount()-1),G_END_ICON));
-        // marker = new google.maps.Marker({location:polyline.getPath().getAt(0)} /* ,{icon:car} */);
-        // map.addOverlay(marker);
-        poly2 = new google.maps.Polyline({path: [polyline.getPath().getAt(0)], strokeColor:"#0000FF", strokeWeight:10});
-        //map.addOverlay(poly2);
-        setTimeout("animate(50)",2000);  // Allow time for the initial map display
+    eol=polyline.Distance();
+    map.setCenter(polyline.getPath().getAt(0));
+    // map.addOverlay(new google.maps.Marker(polyline.getAt(0),G_START_ICON));
+    // map.addOverlay(new GMarker(polyline.getVertex(polyline.getVertexCount()-1),G_END_ICON));
+    // marker = new google.maps.Marker({location:polyline.getPath().getAt(0)} /* ,{icon:car} */);
+    // map.addOverlay(marker);
+    poly2 = new google.maps.Polyline({path: [polyline.getPath().getAt(0)], strokeColor:"#0000FF", strokeWeight:10});
+    //map.addOverlay(poly2);
+    setTimeout("animate(50)",2000);  // Allow time for the initial map display
 }
 
 
@@ -335,8 +325,7 @@ function startAnimation() {
 </head>
 <body onload="initialize();startPresentation();">
 <!--<body onload="initialize();drawRoute('2700 Hearst Ave, Berkeley CA', 'Tolmon Hall, Berkeley, CA', ['37.875277,-122.259614']);drawRoute('Tolmon Hall, Berkeley, CA', '1676 Euclid Ave, Berkeley CA', []);">-->
-<div id="modals">
-</div>
+<div id="modals"></div>
 
 <div id="map_canvas" style="width:100%;height:100%;"></div>
     <script src="http://sumukh.me/local/assets/js/jquery.js"></script>
