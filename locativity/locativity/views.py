@@ -4,10 +4,10 @@ from django.template import RequestContext
 import locaobjects
 import json
 
-HOME = building((2,3), (8,10), [])
-SODA = building((7,7), (10,10), [])
-QUALCOMM = building((10,50), (70,80), [])
-MAINSTACKS = building((1,1), (3,3), [])
+HOME = building((2,3), (8,10), [], "Home")
+SODA = building((7,7), (10,10), [], "Soda")
+QUALCOMM = building((10,50), (70,80), [], "Qualcomm")
+MAINSTACKS = building((1,1), (3,3), [], "Mainstacks")
 
 
 buildings = [HOME, SODA, QUALCOMM, MAINSTACKS]
@@ -19,11 +19,12 @@ START_TIME = 0
 state = NULL
 ATTEND_THRES = 9000
 
+req = {}
 
 def report_coordinates(request):
   "Expects coordinates and a timestamp in the POST. Save this to the user's model."
   "POST is a dictionary with parameters: latitude, longitude, timestamp (epoch time)"
-  return request
+  req = request
 
 def whereIam(location):
   for building in buildings:
@@ -75,7 +76,6 @@ def presentation_data(request):
    },...
   ]
   """
-  req = report_coordinates(request)
   location = str(req["longitude"]) + "," + str(req["latitude"])
   time = req["timestamp"]
   building = whereIam(location)
@@ -112,6 +112,6 @@ def presentation_data(request):
     json_dict["path"]["locations"] += [location] 
     if(building):
       state = NULL
-
-  
+  AT = ActivityTracker()
+  AT.populate_comp_activity(paths)
   return HttpResponse(json.dumps({"data":paths}))

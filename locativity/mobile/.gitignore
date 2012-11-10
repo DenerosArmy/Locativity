@@ -1,0 +1,31 @@
+# File patters for any path level.
+*.diff
+*.exe
+*.mode1v3
+*.orig
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.swp
+.DS_Store
+project.xcworkspace/
+tags
+xcuserdata/
+
+# Absolute paths.
+/build/
+/csv_to_kml/*.csv
+/csv_to_kml/*.kml
+/csv_to_kml/*.kmz
+/csv_to_kml/alessandra/
+/csv_to_kml/esti/
+/csv_to_kml/krystal/
+/csv_to_kml/taeyeon/
+/csv_to_kml/yuri/
+/dist/
+/docs/README*.html
+/docs/background_tracking.html
+/docs/doxygen
+/docs/storage_schemas.html
+/resources/Default.png
+/resources/Default@2x.png
