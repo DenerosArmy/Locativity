@@ -52,7 +52,7 @@ function createMarker(latlng, label, html) {
 
 
 function initialize() {
-  infowindow = new google.maps.InfoWindow(
+    infowindow = new google.maps.InfoWindow(
     { 
       size: new google.maps.Size(150,50)
     });
@@ -89,13 +89,10 @@ function initialize() {
     strokeWeight: 3
     });
 }
-
-  
   
 var steps = []
 
 function drawRoute(start, end, waypoints){
-
     if (timerHandle) { clearTimeout(timerHandle); }
     if (marker) { marker.setMap(null);}
     polyline.setMap(null);
@@ -173,6 +170,30 @@ function drawRoute(start, end, waypoints){
         }                                                    
     });
 }
+
+function startPresentation(){
+  //$.get(
+    //"http://127.0.0.1:8000/presentation_data",
+    //function(data) {
+      //alert('page content: ' + data);
+    //}
+  //);
+  $.ajax({
+      url: "http://127.0.0.1:8000/presentation_data",
+      dataType: 'json',
+      success: function(wrapped){
+        var data = wrapped["data"];
+        var start;
+        var end;
+        for (var i=0;i<data.length-1;i++){
+          start = data[i]["coordinates"];
+          waypoints = data[i]["locations"];
+          end = data[i+1]["coordinates"];
+          drawRoute(start, waypoints, end);
+        }
+      }
+  });
+}
   
 var step = 10; // 5; // metres
 var tick = 5; // milliseconds
@@ -235,9 +256,26 @@ function startAnimation() {
 
 </script>
 </head>
-<body onload="initialize();drawRoute('2700 Hearst Ave, Berkeley CA', 'Tolmon Hall, Berkeley, CA', ['37.875277,-122.259614']);drawRoute('Tolmon Hall, Berkeley, CA', '1676 Euclid Ave, Berkeley CA', []);">
+<body onload="initialize();startPresentation();">
+<!--<body onload="initialize();drawRoute('2700 Hearst Ave, Berkeley CA', 'Tolmon Hall, Berkeley, CA', ['37.875277,-122.259614']);drawRoute('Tolmon Hall, Berkeley, CA', '1676 Euclid Ave, Berkeley CA', []);">-->
 
 
 <div id="map_canvas" style="width:100%;height:100%;"></div>
+    <script src="http://sumukh.me/local/assets/js/jquery.js"></script>
+    <script src="http://sumukh.me/local/assets/js/google-code-prettify/prettify.js"></script>
+    <script src="http://sumukh.me/local/assets/js/bootstrap-transition.js"></script>
+    <script src="http://sumukh.me/local/assets/js/bootstrap-alert.js"></script>
+    <script src="http://sumukh.me/local/assets/js/bootstrap-modal.js"></script>
+    <script src="http://sumukh.me/local/assets/js/bootstrap-dropdown.js"></script>
+    <script src="http://sumukh.me/local/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="http://sumukh.me/local/assets/js/bootstrap-tab.js"></script>
+    <script src="http://sumukh.me/local/assets/js/bootstrap-tooltip.js"></script>
+    <script src="http://sumukh.me/local/assets/js/bootstrap-popover.js"></script>
+    <script src="http://sumukh.me/local/assets/js/bootstrap-button.js"></script>
+    <script src="http://sumukh.me/local/assets/js/bootstrap-collapse.js"></script>
+    <script src="http://sumukh.me/local/assets/js/bootstrap-carousel.js"></script>
+    <script src="http://sumukh.me/local/assets/js/bootstrap-typeahead.js"></script>
+    <script src="http://sumukh.me/local/assets/js/bootstrap-affix.js"></script>
+    <script src="http://sumukh.me/local/assets/js/application.js"></script>
 </body>
 </html>

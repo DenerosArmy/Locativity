@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-import locaobjects
+from locaobjects import *
 import json
 
 SODA = building((37.875238,-122.258911), (37.875766,-122.258417), [], "Soda Hall")
@@ -31,6 +31,12 @@ def whereIam(location):
     if building.contains(location):
       return building
   return None
+
+def v3_epoly(request):
+  return render_to_response("v3_epoly.js")
+
+def presentation(request):
+  return render_to_response("cartime.html")
 
 
 def presentation_data(request):
