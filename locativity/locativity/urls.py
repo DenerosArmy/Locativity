@@ -5,6 +5,15 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+    # Web Services
+    url(r'^$', 'locativity.views.home', name='home'),
+    url(r'^dashboard', 'locativity.views.dashboard', name='dashboard'),
+
+    # Endpoint Services
+    # url(r'^$', 'locativity.views.home', name='home'),
+    url(r'^report_coordinates', 'locativity.views.report_coordinates', name='report_coordinates'),
+    url(r'^presentation_data', 'locativity.views.presentation_data', name='presentation_data'),
+
     # Examples:
     # url(r'^$', 'locativity.views.home', name='home'),
     # url(r'^locativity/', include('locativity.foo.urls')),
