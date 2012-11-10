@@ -8,9 +8,10 @@ SODA = building((37.875238,-122.258911), (37.875766,-122.258417), [], "Soda Hall
 HOME = building((37.878628,-122.261212), (37.878871,-122.261), [], "Home")
 QUALCOMM = building((37.874487,-122.258953), (37.87487,-122.258715), [], "Qualcomm Cyber Cafe")
 DOE = building((37.871758,-122.259769), (37.872609,-122.259195), [], "Doe Memorial Library")
+EVANS = building((37.87344,-122.257909), (37.87388,-122.257597), [], "Evans")
+DWINELLE = building((37.870179,-122.260687), (37.871119,-122.260441), [], "Dwinelle")
 
-
-buildings = [HOME, SODA, QUALCOMM, DOE]
+buildings = [HOME, SODA, QUALCOMM, DOE, EVANS, DWINELLE]
 #sched = schedule({0:None, 1:None, 2:None, 3:None, 4:None, 5:None, 6:None})
 paths = []
 NULL = -1
@@ -19,8 +20,37 @@ PATH = 1
 START_TIME = 0
 state = NULL
 ATTEND_THRES = 9000
+reqs = [{"latitude": 37.878749, "longitude": -122.26109, "timestamp":0},
+{"latitude":37.87709,"longitude": -122.260521, "timestamp": 1},
+{"latitude":37.875185,"longitude": -122.25933, "timestamp": 2},
+{"latitude":37.875642,"longitude": -122.258708, "timestamp": 3},
+{"latitude":37.875312,"longitude": -122.258536, "timestamp": 4},
+{"latitude":37.874895,"longitude": -122.258562, "timestamp": 5},
+{"latitude":37.874812,"longitude": -122.258354, "timestamp": 6},
+{"latitude":37.874473,"longitude": -122.25682, "timestamp": 7},
+{"latitude":37.873694,"longitude": -122.257774, "timestamp": 8},
+{"latitude":37.872796,"longitude": -122.256621, "timestamp": 9},
+{"latitude":37.871882,"longitude": -122.257399, "timestamp": 10},
+{"latitude":37.871772,"longitude": -122.258542, "timestamp": 11},
+{"latitude":37.872136,"longitude": -122.259352, "timestamp": 12},
+{"latitude":37.871572,"longitude": -122.25992, "timestamp": 13},
+{"latitude":37.870594,"longitude": -122.260081, "timestamp": 14},
+{"latitude":37.87056,"longitude": -122.260553, "timestamp": 15},
+{"latitude":37.871572,"longitude": -122.25992, "timestamp": 16},
+{"latitude":37.873457,"longitude": -122.2597, "timestamp": 17},
+{"latitude":37.875041,"longitude": -122.26014, "timestamp": 18},
+{"latitude":37.87709,"longitude": -122.260521, "timestamp": 19},
+{"latitude":37.878628,"longitude": -122.261212, "timestamp": 20}]
 
-reqs = [{"latitude": 37.878749, "longitude": -122.26109, "timestamp":0}, {"latitude":37.877513, "longitude": -122.260634, "timestamp":1}, {"latitude":37.875125, "longitude": -122.260135, "timestamp":2}, {"latitude":37.87529, "longitude": -122.258606, "timestamp":3}, {"latitude": 37.87486, "longitude": -122.257941, "timestamp":4}, {"latitude": 37.873865, "longitude": -122.257656, "timestamp":5}, {"latitude": 37.873901, "longitude": -122.258598, "timestamp":6}, {"latitude": 37.874633, "longitude": -122.258893, "timestamp":7}]
+'''
+reqs = [{"latitude": 37.878749, "longitude": -122.26109, "timestamp":0},
+        {"latitude":37.877513, "longitude": -122.260634, "timestamp":1},
+        {"latitude":37.875125, "longitude": -122.260135, "timestamp":2},
+        {"latitude":37.87529, "longitude": -122.258606, "timestamp":3},
+        {"latitude": 37.87486, "longitude": -122.257941, "timestamp":4},
+        {"latitude": 37.873865, "longitude": -122.257656, "timestamp":5},
+        {"latitude": 37.873901, "longitude": -122.258598, "timestamp":6},
+        {"latitude": 37.874633, "longitude": -122.258893, "timestamp":7}]'''
 
 def report_coordinates(request):
   "Expects coordinates and a timestamp in the POST. Save this to the user's model."
