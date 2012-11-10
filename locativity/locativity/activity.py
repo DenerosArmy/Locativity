@@ -2,7 +2,7 @@ import urllib2, datetime
 
 class ActivityTracker:
   
-  the_key = ""
+  the_key = "B63tzSIB3IzHzU7Xx9wWI06OvUK8dsvgYOdo_XfI"
 
   def __init__(self):
     pass
@@ -39,27 +39,37 @@ class ActivityTracker:
     new_ent["duration"] = cols[1][:-2]
     return new_ent
 
-  def populate_comp_activity(self, presentation_data, date=None):
+  def populate_comp_activity(self, presentation_data, date="2012-11-09"):
     """
     'comp_activity':[
       {
       'activity':'Facebook',
       'category':'Crap',
       'productivity':-99,
-      'duration':25
-      },...
+      'duration':25,
+      'percenttime':15
+      },..
     ]
     """
     data = self.get_data(ActivityTracker.the_key, date)
-    curr = []
+    curr = [{"activity":"Activity", "category":"Category", "productivity":"Productivity", "duration":"Duration", "percenttime":"Percent Time"}]
     curr_dur = 0
     for path in presentation_data:
+      total_dur = 0
+      total_prod = []
       if len(data) > 0:
         cand_dur = curr_dur+int(data[0]["duration"])
       while len(data) > 0 and cand_dur < path["start"]["total_time_spent"]:
         curr.append(data.pop(0))
+        total_dur += curr[-1]["duration"]
+        total_prod.append(curr[-1]["productivity"])
         curr_dur = cand_dur
         if len(data) > 0:
           cand_dur = curr_dur+int(data[0]["duration"])
+      for act in curr:
+        act["percenttime"] = (float(act["duration"])/total_dur)*100
+      path["net_productivity"] = 0
+      if len(total_prod) > 0:
+        path["net_productivity"] = float(sum(total_prod))/len(total_prod)
       path["comp_activity"] = curr
-      curr = []
+      curr = [{"activity":"Activity", "category":"Category", "productivity":"Productivity", "duration":"Duration", "percenttime":"Percent Time"}]
