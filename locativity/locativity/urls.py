@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^showdata', 'locativity.views.presentation', name='presentation'),
     url(r'^analytics', 'locativity.views.analytics', name='analytics'),
     url(r'^settings', 'locativity.views.settings', name='settings'),
+    url(r'^modal', 'locativity.views.modal', name='modal'),
     url(r'^v3_epoly.js', 'locativity.views.v3_epoly', name='v3_epoly'),
 
     # Endpoint Services

@@ -63,6 +63,9 @@ def analytics(request):
 def settings(request):
   return render_to_response("settings.html")
 
+def modal(request):
+  return render_to_response("modal.html")
+
 def presentation_data(request):
   """Returns a JSON containing all the data for the final presentation. JSON should be an array of paths, each containing the building the path starts at. Eg:
   [{
