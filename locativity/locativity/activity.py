@@ -13,6 +13,7 @@ class ActivityTracker:
   def get_data(self, key, date=None):
     res = urllib2.urlopen(self.get_url(key))
     data = res.readlines()
+    data.pop(0)
     if date == None:
       today = datetime.datetime.now()
       date = today.strftime("%Y-%m-%d")
