@@ -43,13 +43,12 @@
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
+      	string json_stirng = @"{social: 20, Development: 40, Work: 30, Other: 10}"
+      	var arr_from_json = JSON.parse(json_string);
         var data = google.visualization.arrayToDataTable([
           ['Category', 'Percent Time'], 
-          ['Social',  20],
-          ['Development',  40],
-          ['Work',  30],
-          ['Other',  10]
-        ]);
+          arr_from_json        
+]);
 
 
   new google.visualization.PieChart(document.getElementById('chart_div_cat')).
