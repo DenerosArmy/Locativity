@@ -11,29 +11,28 @@ html{height:100%;}
 body{height:100%;margin:0px;font-family: Helvetica,Arial;}
 </style>
 
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAiD-ujSRdIMkqRISKerIHjj3FEcMW6RFA&sensor=false"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAiD-ujSRdIMkqRISKerIHjj3FEcMW6RFA&sensor=false"></script>
 <script type ="text/javascript" src="v3_epoly.js"></script>
 <script type="text/javascript">
   
-  var map;
-  var directionDisplay;
-  var directionsService;
-  var stepDisplay;
-  var markerArray = [];
-  var position;
-  var marker = null;
-  var polyline = null;
-  var poly2 = null;
-  var speed = 0.005, wait = 1;
-  var infowindow = null;
-  
-    var myPano;   
-    var panoClient;
-    var nextPanoId;
-  var timerHandle = null;
+var map;
+var directionDisplay;
+var directionsService;
+var stepDisplay;
+var markerArray = [];
+var position;
+var marker = null;
+var polyline = null;
+var poly2 = null;
+var speed = 0.005, wait = 1;
+var infowindow = null;
+var myPano;   
+var panoClient;
+var nextPanoId;
+var timerHandle = null;
 
 function createMarker(latlng, label, html) {
-// alert("createMarker("+latlng+","+label+","+html+","+color+")");
+    // alert("createMarker("+latlng+","+label+","+html+","+color+")");
     var contentString = '<b>'+label+'</b><br>'+html;
     var marker = new google.maps.Marker({
         position: latlng,
@@ -62,16 +61,13 @@ function initialize() {
     
     // Create a map and center it on Manhattan.
     var myOptions = {
-      zoom: 13,
+      zoom: 16,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
     address = 'Sather Tower, UC Berkeley, Berkeley, CA'
     geocoder = new google.maps.Geocoder();
-  geocoder.geocode( { 'address': address}, function(results, status) {
-       map.setCenter(results[0].geometry.location);
-  });
+    geocoder.geocode({'address': address}, function(results, status) {map.setCenter(results[0].geometry.location);});
     
     // Create a renderer for directions and bind it to the map.
     var rendererOptions = {
@@ -83,114 +79,108 @@ function initialize() {
     stepDisplay = new google.maps.InfoWindow();
 
     polyline = new google.maps.Polyline({
-  path: [],
-  strokeColor: '#FF0000',
-  strokeWeight: 3
+    path: [],
+    strokeColor: '#FF0000',
+    strokeWeight: 3
     });
     poly2 = new google.maps.Polyline({
-  path: [],
-  strokeColor: '#FF0000',
-  strokeWeight: 3
+    path: [],
+    strokeColor: '#FF0000',
+    strokeWeight: 3
     });
-  }
+}
 
   
   
-  var steps = []
+var steps = []
 
-  function calcRoute(){
+function drawRoute(start, end, waypoints){
 
-if (timerHandle) { clearTimeout(timerHandle); }
-if (marker) { marker.setMap(null);}
-polyline.setMap(null);
-poly2.setMap(null);
-directionsDisplay.setMap(null);
+    if (timerHandle) { clearTimeout(timerHandle); }
+    if (marker) { marker.setMap(null);}
+    polyline.setMap(null);
+    poly2.setMap(null);
+    directionsDisplay.setMap(null);
     polyline = new google.maps.Polyline({
-  path: [],
-  strokeColor: '#FF0000',
-  strokeWeight: 3
+        path: [],
+        strokeColor: '#FF0000',
+        strokeWeight: 3
     });
     poly2 = new google.maps.Polyline({
-  path: [],
-  strokeColor: '#FF0000',
-  strokeWeight: 3
+        path: [],
+        strokeColor: '#FF0000',
+        strokeWeight: 3
     });
     // Create a renderer for directions and bind it to the map.
     var rendererOptions = {
-      map: map
+        map: map
     }
-directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+    directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
 
-      var start = "2700 Hearst AVe, Berkeley CA";
-      var end = "Tolmon Hall, Berkeley, CA";
     var travelMode = google.maps.DirectionsTravelMode.WALKING
 
-      var request = {
-          origin: start,
-          destination: end,
-            waypoints: [
-    {
-      location:"37.875277,-122.259614",
-      stopover:false
-    }],
-
-          travelMode: google.maps.TravelMode.WALKING
-      };
+    var waypts = [];
+    for (var i=0; i<waypoints.length; i++){
+        waypts.push({location:waypoints[i], stopover:false});
+    }
+    var request = {
+        origin: start,
+        destination: end,
+        waypoints: waypts,
+        travelMode: google.maps.TravelMode.WALKING
+    };
 
     // Route the directions and pass the response to a
     // function to create markers for each step.
-  directionsService.route(request, function(response, status) {
-    if (status == google.maps.DirectionsStatus.OK){
-  directionsDisplay.setDirections(response);
+    directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK){
+            directionsDisplay.setDirections(response);
 
-        var bounds = new google.maps.LatLngBounds();
-        var route = response.routes[0];
-        startLocation = new Object();
-        endLocation = new Object();
+            var bounds = new google.maps.LatLngBounds();
+            var route = response.routes[0];
+            startLocation = new Object();
+            endLocation = new Object();
 
-        // For each route, display summary information.
-  var path = response.routes[0].overview_path;
-  var legs = response.routes[0].legs;
-        for (i=0;i<legs.length;i++) {
-          if (i == 0) { 
-            startLocation.latlng = legs[i].start_location;
-            startLocation.address = legs[i].start_address;
-            // marker = google.maps.Marker({map:map,position: startLocation.latlng});
-            marker = createMarker(legs[i].start_location,"start",legs[i].start_address,"green");
-          }
-          endLocation.latlng = legs[i].end_location;
-          endLocation.address = legs[i].end_address;
-          var steps = legs[i].steps;
-          for (j=0;j<steps.length;j++) {
-            var nextSegment = steps[j].path;
-            for (k=0;k<nextSegment.length;k++) {
-              polyline.getPath().push(nextSegment[k]);
-              bounds.extend(nextSegment[k]);
+            // For each route, display summary information.
+            var path = response.routes[0].overview_path;
+            var legs = response.routes[0].legs;
+            for (i=0;i<legs.length;i++) {
+              if (i == 0) { 
+                startLocation.latlng = legs[i].start_location;
+                startLocation.address = legs[i].start_address;
+                // marker = google.maps.Marker({map:map,position: startLocation.latlng});
+                marker = createMarker(legs[i].start_location,"start",legs[i].start_address,"green");
+              }
+              endLocation.latlng = legs[i].end_location;
+              endLocation.address = legs[i].end_address;
+              var steps = legs[i].steps;
+              for (j=0;j<steps.length;j++) {
+                var nextSegment = steps[j].path;
+                for (k=0;k<nextSegment.length;k++) {
+                  polyline.getPath().push(nextSegment[k]);
+                  bounds.extend(nextSegment[k]);
 
 
 
+                }
+              }
             }
-          }
-        }
-
-        polyline.setMap(map);
-        map.fitBounds(bounds);
-//        createMarker(endLocation.latlng,"end",endLocation.address,"red");
-  map.setZoom(18);
-  startAnimation();
-    }                                                    
- });
+            polyline.setMap(map);
+            map.fitBounds(bounds);
+            //createMarker(endLocation.latlng,"end",endLocation.address,"red");
+            map.setZoom(18);
+            startAnimation();
+        }                                                    
+    });
 }
   
-
-  
-      var step = 10; // 5; // metres
-      var tick = 5; // milliseconds
-      var eol;
-      var k=0;
-      var stepnum=0;
-      var speed = "";
-      var lastVertex = 1;
+var step = 10; // 5; // metres
+var tick = 5; // milliseconds
+var eol;
+var k=0;
+var stepnum=0;
+var speed = "";
+var lastVertex = 1;
 
 
 //=============== animation functions ======================
@@ -245,7 +235,7 @@ function startAnimation() {
 
 </script>
 </head>
-<body onload="initialize();calcRoute();">
+<body onload="initialize();drawRoute('2700 Hearst Ave, Berkeley CA', 'Tolmon Hall, Berkeley, CA', ['37.875277,-122.259614']);drawRoute('Tolmon Hall, Berkeley, CA', '1676 Euclid Ave, Berkeley CA', []);">
 
 
 <div id="map_canvas" style="width:100%;height:100%;"></div>
