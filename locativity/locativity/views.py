@@ -11,6 +11,7 @@ DOE = building((37.871758,-122.259769), (37.872609,-122.259195), [], "Doe Memori
 
 
 buildings = [HOME, SODA, QUALCOMM, DOE]
+#sched = schedule({0:None, 1:None, 2:None, 3:None, 4:None, 5:None, 6:None})
 paths = []
 NULL = -1
 START = 0
@@ -78,10 +79,12 @@ def presentation_data(request):
    },...
   ]
   """
+  global state,buildings,paths,ATTEND_THRES,START_TIME, sched
   for req in reqs:
-    location = str(req["latitude"]) + "," + str(req["longitude"])
+    location = tuple([req["latitude"], req["longitude"]])
     time = req["timestamp"]
     building = whereIam(location)
+    location = str(req["latitude"]) + "," + str(req["longitude"])
     if(state == NULL):
       json_dict = {"start":{}, "path":{}}
       START_TIME = time
@@ -94,27 +97,37 @@ def presentation_data(request):
       else:
         state = PATH
         json_dict["path"]["start_time"] = START_TIME
-        json_dict["path"]["lectures"] = schedule.lecture_list(time)
         json_dict["path"]["locations"] = [location]
       paths.append(json_dict)
     elif(state == START):
       json_dict = paths[-1]
       json_dict["start"]["end_time"] = time
-      json_dict["start"]["total_time_spent"] = START_TIME - time
+      json_dict["start"]["total_time_spent"] = time - START_TIME
       if(START_TIME - time >= ATTEND_THRES):
         for lecture in json_dict["start"]["lectures"]:
           lecture["attend"] = False
       if(not building):
         START_TIME = time
         state = PATH
+        json_dict["path"]["locations"] = []
+        json_dict["path"]["start_time"] = START_TIME
     elif(state == PATH):
-      json_dict = paths[-1]
+      pron_dict = paths[-1]
       json_dict["path"]["end_time"] = time
-      json_dict["path"]["total_time_spent"] = START_TIME - time
-      json_dict["path"]["lectures"] += schedule.lecture_list(time)
-      json_dict["path"]["locations"] += [location] 
+      json_dict["path"]["total_time_spent"] = time - START_TIME
+      #json_dict["path"]["lectures"] += sched.lec_list(time)
+      json_dict["path"]["locations"].append(location) 
       if(building):
-        state = NULL
+        state = START
+        json_dict = {"start":{}, "path":{}}
+        START_TIME = time
+        state = START
+        json_dict["start"]["start_time"] = START_TIME
+        json_dict["start"]["building_name"] = building.name()
+        json_dict["start"]["coordinates"] = location
+        json_dict["start"]["lectures"] = building.gen_lect_dict()
+        paths.append(json_dict)
   AT = ActivityTracker()
   AT.populate_comp_activity(paths)
+  print paths
   return HttpResponse(json.dumps({"data":paths}))

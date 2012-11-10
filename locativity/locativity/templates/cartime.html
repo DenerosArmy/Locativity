@@ -93,6 +93,7 @@ function initialize() {
 var steps = []
 
 function drawRoute(start, end, waypoints){
+    console.log(start);
     if (timerHandle) { clearTimeout(timerHandle); }
     if (marker) { marker.setMap(null);}
     polyline.setMap(null);
@@ -172,24 +173,21 @@ function drawRoute(start, end, waypoints){
 }
 
 function startPresentation(){
-  //$.get(
-    //"http://127.0.0.1:8000/presentation_data",
-    //function(data) {
-      //alert('page content: ' + data);
-    //}
-  //);
   $.ajax({
       url: "http://127.0.0.1:8000/presentation_data",
       dataType: 'json',
       success: function(wrapped){
+        //console.log(wrapped)
         var data = wrapped["data"];
         var start;
         var end;
         for (var i=0;i<data.length-1;i++){
-          start = data[i]["coordinates"];
-          waypoints = data[i]["locations"];
-          end = data[i+1]["coordinates"];
-          drawRoute(start, waypoints, end);
+          console.log(data[i+1])
+          start = data[i]["start"]["coordinates"];
+          waypoints = data[i]["path"]["locations"];
+          end = data[i+1]["start"]["coordinates"];
+
+          drawRoute(start, end, waypoints);
         }
       }
   });

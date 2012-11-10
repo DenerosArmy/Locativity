@@ -1,34 +1,43 @@
 import time
 class building:
-    def __init__(self, botleft, topright, lectures, name):
+    def __init__(self, botleft, topright, lectures, nme):
         self.botleft = botleft
         self.topright = topright
-        self.name = name
+        self.nme = nme
         self.lectures = lectures # list
     def contains(self, position):
-        x,y = self.position;
-        return (botleft[0] <= x <= topright[0]) and (botleft[1] <= y <= topright[1])
+        x,y = position
+        return (self.botleft[0] <= x <= self.topright[0]) and (self.botleft[1] <= y <= self.topright[1])
     def name(self):
-        return self.name;
+        return self.nme;
     def lectures(self):
         return self.lectures
     def gen_lect_dict(self):
         d = []
+        print "Hello"
         for lecture in self.lectures:
-            d.append(lecture.get_dict())
+          print "Hello"  
+          d.append(lecture.get_dict())
+          print "Hello"
+        print "Hello"
         return d
 
 class schedule:
     def __init__(self, dayToLectures):
         self.dayToLectures = dayToLectures
-    def missed_lectures(self, time):
+    def lec_list(self, time):
         lecture_list = []
+        print "Hello13"
         localtime = time.localtime()
+        print "Hello13"
         lectures = self.dayToLectures[localtime.tm_wday]
+        print "Hello13"
         for lecture in lectures:
             hstart, mstart = lecture.start()
+            print "Hello13"
             hend, mend = lecture.end()
             tmp = lecture.get_dict()
+            print "Hello13"
             if(60*hstart + mstart <= 60*localtime.tm_hour + localtime.tm_min):
                 if(60*localtime.tm_hour + localtime.tm_min <= 60*hend + minend):
                     tmp["attended"] = True
