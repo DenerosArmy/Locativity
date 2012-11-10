@@ -147,7 +147,8 @@ function drawRoute(start, end, waypoints){
                 startLocation.latlng = legs[i].start_location;
                 startLocation.address = legs[i].start_address;
                 // marker = google.maps.Marker({map:map,position: startLocation.latlng});
-                marker = createMarker(legs[i].start_location,"start",legs[i].start_address,"green");
+                marker = createMarker(legs[i].start_location,"start",legs[i].start_address+"<img src='http://maps.googleapis.com/maps/api/streetview?size=100x100&location="+legs[i].start_location+"'>","green");
+                //make sure that this works
               }
               endLocation.latlng = legs[i].end_location;
               endLocation.address = legs[i].end_address;
