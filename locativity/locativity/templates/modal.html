@@ -43,11 +43,22 @@
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
-      	string json_stirng = @"{social: 20, Development: 40, Work: 30, Other: 10}"
+      	//string json_stirng = @"{social: 20, Development: 40, Work: 30, Other: 10}"
       	var arr_from_json = JSON.parse(json_string);
         var data = google.visualization.arrayToDataTable([
-          ['Category', 'Percent Time'], 
-          arr_from_json        
+        var dict = ['Category', 'Percent Time'];
+          for(var i=0; i<arr.length; i++) {
+	          	var cat = arr['Category'];
+	          	var len = arr['Percent_Time'];
+	          	      	
+
+	          	dict.push({
+    key:   cat,
+    value: len
+    		});
+
+	          			}
+    
 ]);
 
 
