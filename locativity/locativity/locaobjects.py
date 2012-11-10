@@ -14,12 +14,8 @@ class building:
         return self.lectures
     def gen_lect_dict(self):
         d = []
-        print "Hello"
         for lecture in self.lectures:
-          print "Hello"  
           d.append(lecture.get_dict())
-          print "Hello"
-        print "Hello"
         return d
 
 class schedule:
@@ -27,17 +23,12 @@ class schedule:
         self.dayToLectures = dayToLectures
     def lec_list(self, time):
         lecture_list = []
-        print "Hello13"
         localtime = time.localtime()
-        print "Hello13"
         lectures = self.dayToLectures[localtime.tm_wday]
-        print "Hello13"
         for lecture in lectures:
             hstart, mstart = lecture.start()
-            print "Hello13"
             hend, mend = lecture.end()
             tmp = lecture.get_dict()
-            print "Hello13"
             if(60*hstart + mstart <= 60*localtime.tm_hour + localtime.tm_min):
                 if(60*localtime.tm_hour + localtime.tm_min <= 60*hend + minend):
                     tmp["attended"] = True

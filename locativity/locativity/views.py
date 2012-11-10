@@ -11,36 +11,24 @@ DOE = building((37.871758,-122.259769), (37.872609,-122.259195), [], "Doe Memori
 EVANS = building((37.87344,-122.257909), (37.87388,-122.257597), [], "Evans")
 DWINELLE = building((37.870179,-122.260687), (37.871119,-122.260441), [], "Dwinelle")
 
-buildings = [HOME, SODA, QUALCOMM, DOE, EVANS, DWINELLE]
-#sched = schedule({0:None, 1:None, 2:None, 3:None, 4:None, 5:None, 6:None})
-paths = []
 NULL = -1
 START = 0
 PATH = 1
-START_TIME = 0
+
+#def set_globals():
+  #global state,buildings,paths,ATTEND_THRES,START_TIME,reqs
 state = NULL
+buildings = [HOME, SODA, QUALCOMM, DOE, EVANS, DWINELLE]
+paths = []
 ATTEND_THRES = 9000
+START_TIME = 0
 reqs = [{"latitude": 37.878749, "longitude": -122.26109, "timestamp":0},
-{"latitude":37.87709,"longitude": -122.260521, "timestamp": 1},
-{"latitude":37.875185,"longitude": -122.25933, "timestamp": 2},
-{"latitude":37.875642,"longitude": -122.258708, "timestamp": 3},
-{"latitude":37.875312,"longitude": -122.258536, "timestamp": 4},
-{"latitude":37.874895,"longitude": -122.258562, "timestamp": 5},
-{"latitude":37.874812,"longitude": -122.258354, "timestamp": 6},
-{"latitude":37.874473,"longitude": -122.25682, "timestamp": 7},
-{"latitude":37.873694,"longitude": -122.257774, "timestamp": 8},
-{"latitude":37.872796,"longitude": -122.256621, "timestamp": 9},
-{"latitude":37.871882,"longitude": -122.257399, "timestamp": 10},
-{"latitude":37.871772,"longitude": -122.258542, "timestamp": 11},
-{"latitude":37.872136,"longitude": -122.259352, "timestamp": 12},
-{"latitude":37.871572,"longitude": -122.25992, "timestamp": 13},
-{"latitude":37.870594,"longitude": -122.260081, "timestamp": 14},
-{"latitude":37.87056,"longitude": -122.260553, "timestamp": 15},
-{"latitude":37.871572,"longitude": -122.25992, "timestamp": 16},
-{"latitude":37.873457,"longitude": -122.2597, "timestamp": 17},
-{"latitude":37.875041,"longitude": -122.26014, "timestamp": 18},
-{"latitude":37.87709,"longitude": -122.260521, "timestamp": 19},
-{"latitude":37.878628,"longitude": -122.261212, "timestamp": 20}]
+      {"latitude":37.875642,"longitude": -122.258708, "timestamp": 300},
+     {"latitude":37.875312,"longitude": -122.258536, "timestamp": 5000},
+     {"latitude":37.873694,"longitude": -122.257774, "timestamp": 5500},
+       {"latitude":37.872136,"longitude": -122.259352, "timestamp": 12},
+        {"latitude": 37.878749, "longitude": -122.26109, "timestamp":0}]
+
 
 '''
 reqs = [{"latitude": 37.878749, "longitude": -122.26109, "timestamp":0},
@@ -68,6 +56,12 @@ def v3_epoly(request):
 
 def presentation(request):
   return render_to_response("cartime.html")
+
+def analytics(request):
+  return render_to_response("analytics.html")
+
+def settings(request):
+  return render_to_response("settings.html")
 
 def presentation_data(request):
   """Returns a JSON containing all the data for the final presentation. JSON should be an array of paths, each containing the building the path starts at. Eg:
@@ -159,5 +153,11 @@ def presentation_data(request):
         paths.append(json_dict)
   AT = ActivityTracker()
   AT.populate_comp_activity(paths)
+  saved_paths = paths
   print paths
-  return HttpResponse(json.dumps({"data":paths}))
+  state = NULL
+  buildings = [HOME, SODA, QUALCOMM, DOE, EVANS, DWINELLE]
+  paths = []
+  ATTEND_THRES = 9000
+  START_TIME = 0
+  return HttpResponse(json.dumps({"data":saved_paths}))
