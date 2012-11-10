@@ -59,6 +59,57 @@ function createMarker(latlng, label, html) {
     return marker;
 }
 
+function createModal(label,data) { 
+	str = '<div id="'+label+'" class="modal hide fade" tabindex="-1" style="width: 850px; margin-left:-425px; height: 500px" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Foothill - Avg. Productivity 1.43 - Total Time: 3 hrs </h3>
+  </div>
+  <div class="modal-body">
+  
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+      	//string json_stirng = @"{social: 20, Development: 40, Work: 30, Other: 10}"
+      	var arr_from_json = JSON.parse(json_string);
+        var data = google.visualization.arrayToDataTable([
+        var dict = ['+'Category'+', '+'Percent Time'+'];
+          for(var i=0; i<arr.length; i++) {
+	          	var cat = arr['+'Category'+'];
+	          	var len = arr['+'Percent_Time'+'];
+	          	      	
+
+	          	dict.push({
+    key:   cat,
+    value: len
+    		});
+
+	          			}
+	          			//script to open/close $('+'#myModal'+').modal('+'show'+');
+    
+]);
+
+
+  new google.visualization.PieChart(document.getElementById('+'chart_div_cat'+')).
+      draw(data, {title:"Categories",   width: 650,
+  height: 400,is3D:true
+});
+      }
+      
+    </script>
+
+    	<div span="span8"  >
+    <div id="chart_div_cat" style="width: 400px; height: 600px;"></div>
+  </div>
+  </div>
+</div>
+'
+	document.getElementById("modals").appendChild(str);
+
+	
+}
 
 function initialize() {
     infowindow = new google.maps.InfoWindow(
@@ -284,7 +335,8 @@ function startAnimation() {
 </head>
 <body onload="initialize();startPresentation();">
 <!--<body onload="initialize();drawRoute('2700 Hearst Ave, Berkeley CA', 'Tolmon Hall, Berkeley, CA', ['37.875277,-122.259614']);drawRoute('Tolmon Hall, Berkeley, CA', '1676 Euclid Ave, Berkeley CA', []);">-->
-
+<div id="modals">
+</div>
 
 <div id="map_canvas" style="width:100%;height:100%;"></div>
     <script src="http://sumukh.me/local/assets/js/jquery.js"></script>
