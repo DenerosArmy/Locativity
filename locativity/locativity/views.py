@@ -1,8 +1,16 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+import locaobjects
+import json
 
-buildings = []
+HOME = building((2,3), (8,10), [])
+SODA = building((7,7), (10,10), [])
+QUALCOMM = building((10,50), (70,80), [])
+MAINSTACKS = building((1,1), (3,3), [])
+
+
+buildings = [HOME, SODA, QUALCOMM, MAINSTACKS]
 paths = []
 NULL = -1
 START = 0
@@ -10,6 +18,7 @@ PATH = 1
 START_TIME = 0
 state = NULL
 ATTEND_THRES = 9000
+
 
 def report_coordinates(request):
   "Expects coordinates and a timestamp in the POST. Save this to the user's model."
@@ -64,7 +73,7 @@ def presentation_data(request):
   ]
   """
   req = report_coordinates(request)
-  location = (req["longitude"], req["latitude"])
+  location = str(req["longitude"]) + "," + str(req["latitude"])
   time = req["timestamp"]
   building = whereIam(location)
   if(state == NULL):
@@ -100,16 +109,6 @@ def presentation_data(request):
     json_dict["path"]["locations"] += [location] 
     if(building):
       state = NULL
-    
-    
-    
-    
-    
-    
-      
-    
-    
-    
-    
+
   
-  return HttpResponse("json?")
+  return HttpResponse(json.dumps({"data":paths}))
