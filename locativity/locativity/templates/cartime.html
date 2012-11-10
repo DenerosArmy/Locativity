@@ -242,9 +242,10 @@ function startPresentation(){
           //waypoints = data[i]["path"]["locations"];
           end = data[i+1]["start"]["coordinates"];
           drawRoute(start, end, []);
-          sleep(1);
+          
           //createModal(data[i+1]["start"]["building_name"], data[i+1]["comp_activity"])
         }
+        $('#myModal').modal('show');
         /*
         setInterval(function(){
           if (i<data.length-1){
@@ -324,8 +325,17 @@ function startAnimation() {
 </script>
 </head>
 <body onload="initialize();startPresentation();">
+
 <!--<body onload="initialize();drawRoute('2700 Hearst Ave, Berkeley CA', 'Tolmon Hall, Berkeley, CA', ['37.875277,-122.259614']);drawRoute('Tolmon Hall, Berkeley, CA', '1676 Euclid Ave, Berkeley CA', []);">-->
-<div id="modals"></div>
+<div id="modals">
+        
+<script> 
+function done() {
+	window.location = "http://127.0.0.1:8000/modal";
+	}
+</script>
+	
+</div>
 
 <div id="map_canvas" style="width:100%;height:100%;"></div>
     <script src="http://sumukh.me/local/assets/js/jquery.js"></script>

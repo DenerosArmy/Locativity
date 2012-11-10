@@ -1,111 +1,109 @@
 <!DOCTYPE html>
+
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
+
     <title>Locativity</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Le styles -->
-    <link href="http://sumukh.me/local/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="http://sumukh.me/local/assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="http://sumukh.me/local/assets/css/docs.css" rel="stylesheet">
-    <link href="http://sumukh.me/local/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <meta name="author" content=""><!-- Le styles -->
+    <link href="http://sumukh.me/local/assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="http://sumukh.me/local/assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+    <link href="http://sumukh.me/local/assets/css/docs.css" rel="stylesheet" type="text/css">
+    <link href="http://sumukh.me/local/assets/js/google-code-prettify/prettify.css" rel="stylesheet" type="text/css"><!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="http://sumukh.me/local/http://sumukh.me/local/assets/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://sumukh.me/local/assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://sumukh.me/local/assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://sumukh.me/local/assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="http://sumukh.me/local/assets/ico/apple-touch-icon-57-precomposed.png">
-        <script src="http://sumukh.me/local/assets/js/jquery.js"></script>
-
-  </head>
-
-
-  <body onload="$('#myModal').modal('show'); ">
-  <div class="content">
-  
-<div id="myModal" class="modal hide fade" tabindex="-1" style="width: 850px; margin-left:-425px; height: 500px" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Foothill - Avg. Productivity 1.43 - Total Time: 3 hrs </h3>
-  </div>
-  <div class="modal-body">
-
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-      	//string json_stirng = @"{social: 20, Development: 40, Work: 30, Other: 10}"
-      	var arr_from_json = JSON.parse(json_string);
-        var data = google.visualization.arrayToDataTable([
-        var dict = ['Category', 'Percent Time'];
-          for(var i=0; i<arr.length; i++) {
-	          	var cat = arr['Category'];
-	          	var len = arr['Percent_Time'];
-	          	      	
-
-	          	dict.push({
-    key:   cat,
-    value: len
-    		});
-
-	          			}
-    
-]);
-
-
-  new google.visualization.PieChart(document.getElementById('chart_div_cat')).
-      draw(data, {title:"Categories",   width: 650,
-  height: 400,is3D:true
-});
-      }
-      
-    </script>
-
-    	<div span="span8"  >
-    <div id="chart_div_cat" style="width: 400px; height: 600px;"></div>
-  </div>
-  </div>
-</div>
-
-<script>
-
+    <script src="http://sumukh.me/local/assets/js/jquery.js" type="text/javascript">
 </script>
+</head>
 
-  </div>
+<body onload="$('#myModal').modal('show'); ">
+    <div class="content">
+        <div id="myModal" class="modal hide fade" tabindex="-1" style="width: 850px; margin-left:-425px; height: 500px" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
-    <!-- Le javascript
+                <h3 id="myModalLabel"></h3>
+            </div>
+
+            <div class="modal-body">
+                <script type="text/javascript" src="https://www.google.com/jsapi">
+</script> <script type="text/javascript">
+google.load("visualization", "1", {packages:["corechart"]});
+                google.setOnLoadCallback(drawChart);
+                function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                ['Category', 'Percent Time'], 
+                ['Social',  20],
+                ['Development',  40],
+                ['Work',  30],
+                ['Other',  10]
+                ]);
+
+
+                new google.visualization.PieChart(document.getElementById('chart_div_cat')).
+                draw(data, {title:"Categories",   width: 400,
+                height: 400,is3D:true
+                });
+
+
+                }
+
+                </script>
+
+                <div class="span12">
+                    <div class="span4">
+                        <h3>Dwinelle</h3>Avg. Productivity 1.43 - Total Time: 3 hrs<br>
+
+                        <div id="chart_div_cat" style="width: 400px; height: 400px;"></div>
+                    </div>
+
+                    <div class="span4">
+                    <h3>Home</h3>
+                    <hr>
+                    Avg. Productivity -1.2 - Total Time: 7 hrs<br>
+                    <img src="http://chart.googleapis.com/chart?cht=p&chs=400x200&chdl=Social%7CDevelopment%7CWork%7COther&chdlp=r&chco=3399CC%2C80C65A%2CFF0000%2CFFCC33&chd=e%3A..VVKqKq"></div>
+
+                    <div class="span4">
+                    <h3>Soda</h3>
+                    <hr>
+                    Avg. Productivity -1.2 - Total Time: 3 hrs<br>
+                    <img src="http://chart.googleapis.com/chart?cht=p&chs=400x200&chdl=Social%7CDevelopment%7CWork%7COther&chdlp=r&chco=3399CC%2C80C65A%2CFF0000%2CFFCC33&chd=e%3AKq..KqKq"></div>
+                    
+                    <button href="http://127.0.0.1:8000/analytics"></button>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div><!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-
-    <script src="http://sumukh.me/local/assets/js/google-code-prettify/prettify.js"></script>
-    <script src="http://sumukh.me/local/assets/js/bootstrap-transition.js"></script>
-    <script src="http://sumukh.me/local/assets/js/bootstrap-alert.js"></script>
-    <script src="http://sumukh.me/local/assets/js/bootstrap-modal.js"></script>
-    <script src="http://sumukh.me/local/assets/js/bootstrap-dropdown.js"></script>
-    <script src="http://sumukh.me/local/assets/js/bootstrap-scrollspy.js"></script>
-    <script src="http://sumukh.me/local/assets/js/bootstrap-tab.js"></script>
-    <script src="http://sumukh.me/local/assets/js/bootstrap-tooltip.js"></script>
-    <script src="http://sumukh.me/local/assets/js/bootstrap-popover.js"></script>
-    <script src="http://sumukh.me/local/assets/js/bootstrap-button.js"></script>
-    <script src="http://sumukh.me/local/assets/js/bootstrap-collapse.js"></script>
-    <script src="http://sumukh.me/local/assets/js/bootstrap-carousel.js"></script>
-    <script src="http://sumukh.me/local/assets/js/bootstrap-typeahead.js"></script>
-    <script src="http://sumukh.me/local/assets/js/bootstrap-affix.js"></script>
-    <script src="http://sumukh.me/local/assets/js/application.js"></script>
-
-
-    <!-- Analytics
+    <script src="http://sumukh.me/local/assets/js/google-code-prettify/prettify.js" type="text/javascript">
+</script><script src="http://sumukh.me/local/assets/js/bootstrap-transition.js" type="text/javascript">
+</script><script src="http://sumukh.me/local/assets/js/bootstrap-alert.js" type="text/javascript">
+</script><script src="http://sumukh.me/local/assets/js/bootstrap-modal.js" type="text/javascript">
+</script><script src="http://sumukh.me/local/assets/js/bootstrap-dropdown.js" type="text/javascript">
+</script><script src="http://sumukh.me/local/assets/js/bootstrap-scrollspy.js" type="text/javascript">
+</script><script src="http://sumukh.me/local/assets/js/bootstrap-tab.js" type="text/javascript">
+</script><script src="http://sumukh.me/local/assets/js/bootstrap-tooltip.js" type="text/javascript">
+</script><script src="http://sumukh.me/local/assets/js/bootstrap-popover.js" type="text/javascript">
+</script><script src="http://sumukh.me/local/assets/js/bootstrap-button.js" type="text/javascript">
+</script><script src="http://sumukh.me/local/assets/js/bootstrap-collapse.js" type="text/javascript">
+</script><script src="http://sumukh.me/local/assets/js/bootstrap-carousel.js" type="text/javascript">
+</script><script src="http://sumukh.me/local/assets/js/bootstrap-typeahead.js" type="text/javascript">
+</script><script src="http://sumukh.me/local/assets/js/bootstrap-affix.js" type="text/javascript">
+</script><script src="http://sumukh.me/local/assets/js/application.js" type="text/javascript">
+</script><!-- Analytics
     ================================================== -->
-  </body>
+    <!-- Localized -->
+</body>
 </html>
-
-<!-- Localized -->
